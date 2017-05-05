@@ -22,7 +22,7 @@ class DVIDRequester(object):
         self.session = requests.Session()
 
     @retry(wait_exponential_multiplier=100, wait_exponential_max=60000,
-           retry_on_exception=is_network_error, wrap_exception=True)
+           retry_on_exception=is_network_error)
     def get(self, *args, **kwargs):
         logger.debug("Getting url " + repr(args))
         with requests.Session() as session:
@@ -37,7 +37,7 @@ class DVIDRequester(object):
                 raise Exception("Bad response: {}".format(response.text))
 
     @retry(wait_exponential_multiplier=100, wait_exponential_max=10000,
-           retry_on_exception=is_network_error, wrap_exception=True)
+           retry_on_exception=is_network_error)
     def post(self, *args, **kwargs):
         url_args = list(args) + [kwargs.get('url', '')]
         hostname_is_ok = any([
