@@ -1,12 +1,18 @@
 from __future__ import print_function
 
+import logging
 from socket import error as SocketError
 
 import requests
 from requests.adapters import HTTPAdapter
 from retrying import retry
 
-from dvision import logger
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler()  # writes to stderr
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 def is_network_error(exception):
@@ -32,9 +38,9 @@ class DVIDRequester(object):
             if response.ok:
                 return response
             else:
-                with open("/groups/turaga/home/grisaitisw/bad_response.txt", 'a') as f:
-                    f.write(response.text)
-                raise Exception("Bad response: {}".format(response.text))
+                msg = "Bad response: {}".format(response.text)
+                logger.error(msg)
+                raise Exception(msg)
 
     @retry(wait_exponential_multiplier=100, wait_exponential_max=10000,
            retry_on_exception=is_network_error)

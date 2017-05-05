@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import numpy as np
 
-from dvision import dtype_mappings, dvid_requester, logger
+from dvision import dtype_mappings, dvid_requester
 
 
 class DVIDDataInstance(object):

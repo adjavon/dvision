@@ -6,7 +6,7 @@ from distutils.core import setup
 setup(
     name='dvision',
     packages=['dvision'],
-    version='0.1.0',
+    version='0.1.1',
     description='Pure python client for the DVID database',
     author='William Grisaitis',
     license='MIT',
@@ -27,4 +27,3 @@ setup(
         'Topic :: Software Development',
     ],
 )
-

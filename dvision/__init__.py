@@ -1,10 +1,3 @@
-import logging
-
-logging.basicConfig()
-
-logger = logging.getLogger('dvision')
-logger.setLevel(logging.INFO)
-
 from .requester import DVIDRequester
 
 dvid_requester = DVIDRequester(['slowpoke1', 'slowpoke3'])
