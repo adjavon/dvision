@@ -38,7 +38,7 @@ class DVIDRequester(object):
             if response.ok:
                 return response
             else:
-                msg = "Bad response: {}".format(response.text)
+                msg = "DVID response not ok from {}\n{}".format(response.url, response.text)
                 logger.error(msg)
                 raise Exception(msg)
 
