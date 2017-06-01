@@ -61,7 +61,6 @@ class DVIDRegionOfInterest(DVIDDataInstance):
                 raise TypeError("ROIs only work with slice objects, "
                                 "not {} in {}".format(type(s), slices))
         url = self._make_url_for_slices(slices)
-        print(url)
         response = dvid_requester.get(url)
         dvid_octet_stream = response.content
         array = np.fromstring(dvid_octet_stream, dtype=self.dtype)
