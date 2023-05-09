@@ -16,6 +16,7 @@ dtype_mappings = {
     "labelblk": np.dtype("uint64"),
     "keyvalue": None,
     "labelgraph": None,
+    "labelmap": np.dtype("uint64"),
 }
 
 from .data_instance import DVIDDataInstance
