@@ -6,12 +6,13 @@ from dvision import dtype_mappings, dvid_requester
 
 
 class DVIDDataInstance(object):
-    def __init__(self, hostname, port, node, name):
+    def __init__(self, hostname, port, node, name, username=None):
         self.hostname = hostname
         self.port = port
         self.node = node
         self.uuid = node
         self.name = name
+        self.username = username
         self.api_url = 'http://' + self.hostname + ':' + str(port) + '/api/'
         self.url_prefix = self.api_url + 'node/' + node + '/' + name + '/'
         self._info_cache = None
@@ -76,6 +77,8 @@ class DVIDDataInstance(object):
         offset_str = '_'.join([str(o) for o in offset])
         #  <api URL>/node/<UUID>/<data name>/raw/0_1_2/<size>/<offset>[?queryopts]
         url = self.url_prefix + 'raw/' + axes_str + '/' + shape_str + '/' + offset_str
+        if self.username is not None:
+            url += '?u=' + self.username
         array_np = np.array(array, dtype=self.dtype)
         array_as_string = array_np.tostring()
         response = dvid_requester.post(url, data=array_as_string)
@@ -100,6 +103,8 @@ class DVIDDataInstance(object):
         offset = tuple(reversed(offset))
         offset_str = '_'.join([str(o) for o in offset])
         url = self.url_prefix + 'raw/' + axes_str + '/' + shape_str + '/' + offset_str + '/nD'
+        if self.username is not None:
+            url += '?u=' + self.username
         response = dvid_requester.get(url)
         dvid_octet_stream = response.content
         array = np.fromstring(dvid_octet_stream, dtype=self.dtype)
